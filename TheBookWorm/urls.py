@@ -17,6 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from egyptian_constitution_app.views import Question
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/question', Question.as_view())
+
 ]
