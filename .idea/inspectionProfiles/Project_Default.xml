@@ -1,0 +1,46 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myValues">
+        <value>
+          <list size="2">
+            <item index="0" class="java.lang.String" itemvalue="src" />
+            <item index="1" class="java.lang.String" itemvalue="alt" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="22">
+            <item index="0" class="java.lang.String" itemvalue="mysqlclient" />
+            <item index="1" class="java.lang.String" itemvalue="django-celery-beat" />
+            <item index="2" class="java.lang.String" itemvalue="geopy" />
+            <item index="3" class="java.lang.String" itemvalue="pusher" />
+            <item index="4" class="java.lang.String" itemvalue="django-celery-results" />
+            <item index="5" class="java.lang.String" itemvalue="python-dateutil" />
+            <item index="6" class="java.lang.String" itemvalue="gunicorn" />
+            <item index="7" class="java.lang.String" itemvalue="django-debug-toolbar" />
+            <item index="8" class="java.lang.String" itemvalue="channels_redis" />
+            <item index="9" class="java.lang.String" itemvalue="postmarker" />
+            <item index="10" class="java.lang.String" itemvalue="bcrypt" />
+            <item index="11" class="java.lang.String" itemvalue="django" />
+            <item index="12" class="java.lang.String" itemvalue="celery" />
+            <item index="13" class="java.lang.String" itemvalue="channels" />
+            <item index="14" class="java.lang.String" itemvalue="django-filter" />
+            <item index="15" class="java.lang.String" itemvalue="humanize" />
+            <item index="16" class="java.lang.String" itemvalue="drf-extra-fields" />
+            <item index="17" class="java.lang.String" itemvalue="djangorestframework" />
+            <item index="18" class="java.lang.String" itemvalue="twilio" />
+            <item index="19" class="java.lang.String" itemvalue="django-cors-headers" />
+            <item index="20" class="java.lang.String" itemvalue="Pillow" />
+            <item index="21" class="java.lang.String" itemvalue="Twisted" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
