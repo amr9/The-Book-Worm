@@ -1,13 +1,14 @@
 .chat-container {
     display: flex;
     flex-direction: column;
-    width: 400px;
+    width: 30%;
     margin: auto;
     border: 2px solid rgba(11, 8, 8, 0.98);
     padding: 20px;
     border-radius: 8px;
     justify-content: space-between;
     min-height: 100vh;
+    background: radial-gradient(circle at center, rgba(87, 73, 7, 0.92), rgba(3, 1, 34, 0.9) 60%);
 }
 
 .messages {
@@ -18,12 +19,12 @@
 
 .user {
     text-align: right;
-    color: #bc8319;
+    color: rgba(110, 92, 10, 0.92);
 }
 
 .bot {
     text-align: left;
-    color: #a2a619;
+    color: rgba(134, 140, 12, 0.93);
 }
 
 .question-button-container {
@@ -32,7 +33,7 @@
     height: 36px;
     position: sticky;
     bottom: 0;
-    background: rgba(34, 11, 66, 0.88);
+    background: rgba(255, 255, 255, 0);
     padding: 5px;
     border-radius: 8px;
 }
@@ -41,14 +42,14 @@ input {
     border: none;
     flex: 1;
     padding: 10px;
-    background: rgba(34, 11, 66, 0.88);
+    background: rgba(255, 255, 255, 0);
     border-radius: 8px;
     color: #BC8319FF;
 }
 
 .send-button {
     border: none;
-    background: rgba(34, 11, 66, 0.88);
+    background: rgba(34, 11, 66, 0);
     padding: 0;
     margin-left: 5px;
     width: 36px;

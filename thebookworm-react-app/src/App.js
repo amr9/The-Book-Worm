@@ -26,26 +26,29 @@ function App() {
     };
 
     return (
-        <div className="chat-container">
-            <div className="messages">
-                {messages.map((msg, index) => (
-                    <div key={index} className={msg.sender}>
-                        {msg.text}
-                    </div>
-                ))}
+        <div className="pattern">
+            <div className="chat-container">
+                <div className="messages">
+                    {messages.map((msg, index) => (
+                        <div key={index} className={msg.sender}>
+                            {msg.text}
+                        </div>
+                    ))}
+                </div>
+                <div className="question-button-container">
+                    <input
+                        type="text"
+                        value={input}
+                        onChange={(e) => setInput(e.target.value)}
+                        onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+                        placeholder="Type your question..."
+                    />
+                    <button onClick={handleSend} className="send-button">
+                        <img src={require("./StaticImages/arrowup.png")} alt="arrow up" className="send-button-img"/>
+                    </button>
+                </div>
             </div>
-            <div className="question-button-container">
-                <input
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                    placeholder="Type your question..."
-                />
-                <button onClick={handleSend} className="send-button">
-                    <img src={require("./StaticImages/arrowup.png")} alt="arrow up" className="send-button-img"/>
-                </button>
-            </div>
+
         </div>
     );
 }
