@@ -3,33 +3,61 @@
     flex-direction: column;
     width: 400px;
     margin: auto;
-    border: 1px solid #ccc;
+    border: 2px solid rgba(11, 8, 8, 0.98);
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 8px;
+    justify-content: space-between;
+    min-height: 100vh;
 }
 
 .messages {
     flex: 1;
     overflow-y: auto;
     margin-bottom: 10px;
-    height: 300px;
 }
 
 .user {
     text-align: right;
-    color: blue;
+    color: #bc8319;
 }
 
 .bot {
     text-align: left;
-    color: green;
+    color: #a2a619;
+}
+
+.question-button-container {
+    display: flex;
+    align-items: center;
+    height: 36px;
+    position: sticky;
+    bottom: 0;
+    background: rgba(34, 11, 66, 0.88);
+    padding: 5px;
+    border-radius: 8px;
 }
 
 input {
-    width: calc(100% - 80px);
+    border: none;
+    flex: 1;
     padding: 10px;
+    background: rgba(34, 11, 66, 0.88);
+    border-radius: 8px;
+    color: #BC8319FF;
 }
 
-button {
-    padding: 10px;
+.send-button {
+    border: none;
+    background: rgba(34, 11, 66, 0.88);
+    padding: 0;
+    margin-left: 5px;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.send-button-img {
+    width: 100%;
+    height: 100%;
 }

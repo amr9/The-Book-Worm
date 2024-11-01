@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './App.css'; // Create this file to style your chat interface
+import './App.css';
 
 function App() {
     const [input, setInput] = useState('');
@@ -34,14 +34,18 @@ function App() {
                     </div>
                 ))}
             </div>
-            <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                placeholder="Type your question..."
-            />
-            <button onClick={handleSend}>Send</button>
+            <div className="question-button-container">
+                <input
+                    type="text"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+                    placeholder="Type your question..."
+                />
+                <button onClick={handleSend} className="send-button">
+                    <img src={require("./StaticImages/arrowup.png")} alt="arrow up" className="send-button-img"/>
+                </button>
+            </div>
         </div>
     );
 }
