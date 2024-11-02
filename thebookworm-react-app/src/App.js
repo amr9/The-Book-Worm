@@ -19,8 +19,6 @@ function App() {
             const botMessage = { text: response.data.answer, sender: 'bot' };
             setMessages((prev) => [...prev, botMessage]);
         } catch (error) {
-            console.error('Error sending message:', error);
-
             // Handle different types of errors
             let errorMessage = 'An unexpected error occurred. Please try again.';
             if (error.response) {
