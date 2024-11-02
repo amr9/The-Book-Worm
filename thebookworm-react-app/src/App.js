@@ -20,6 +20,7 @@ function App() {
             setMessages((prev) => [...prev, botMessage]);
         } catch (error) {
             console.error('Error sending message:', error);
+            // Optionally show an error message to the user
         }
 
         setInput('');
@@ -43,12 +44,11 @@ function App() {
                         onKeyPress={(e) => e.key === 'Enter' && handleSend()}
                         placeholder="Type your question..."
                     />
-                    <button onClick={handleSend} className="send-button">
+                    <button onClick={handleSend} className="send-button" disabled={!input}>
                         <img src={require("./StaticImages/arrowup.png")} alt="arrow up" className="send-button-img"/>
                     </button>
                 </div>
             </div>
-
         </div>
     );
 }
