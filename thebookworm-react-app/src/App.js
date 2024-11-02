@@ -20,8 +20,23 @@ function App() {
             setMessages((prev) => [...prev, botMessage]);
         } catch (error) {
             console.error('Error sending message:', error);
-            // Optionally show an error message to the user
-        }
+
+            // Handle different types of errors
+            let errorMessage = 'An unexpected error occurred. Please try again.';
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                errorMessage = error.response.data.error || 'An error occurred on the server.';
+            } else if (error.request) {
+                // The request was made but no response was received
+                errorMessage = 'No response from the server. Please check if it is running.';
+            } else {
+                // Something happened in setting up the request
+                errorMessage = error.message;
+            }
+
+            const botMessage = { text: errorMessage, sender: 'bot' };
+            setMessages((prev) => [...prev, botMessage]);
+    }
 
         setInput('');
     };
