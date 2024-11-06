@@ -1,17 +1,18 @@
+import os
 from langchain.chains.retrieval_qa.base import RetrievalQA
-from langchain_community.llms import OpenAI
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from langchain_community.document_loaders import PyPDFLoader
-from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import OpenAIEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
 from decouple import config
 import logging
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_chroma import Chroma
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
+
 
 class Question(APIView):
     def __init__(self, **kwargs):
@@ -23,20 +24,23 @@ class Question(APIView):
             raise ValueError("API key not set")
 
         self.embedding = OpenAIEmbeddings(model="text-embedding-3-small", api_key=api_key)
-        self.vectordb = Chroma(persist_directory='docs/chroma/')
+        self.vectordb = self.initialize_vector_store()
+
         self.qa_chain = RetrievalQA.from_chain_type(
-            llm=OpenAI(model="gpt-3.5-turbo", api_key=api_key),
+            llm=ChatOpenAI(model="gpt-3.5-turbo", api_key=api_key),
             chain_type="stuff",
             retriever=self.vectordb.as_retriever(),
             return_source_documents=True
         )
-        self.initialize_vector_store()
 
     def initialize_vector_store(self):
-        # Load pages from the PDF
-        pages = self.loader.load()
+        persist_dir = 'docs/chroma/'
+        # Check if vector store already exists
+        if os.path.exists(persist_dir):
+            return Chroma(persist_directory=persist_dir, embedding_function=self.embedding)
 
-        # Split the documents into chunks
+        # Otherwise, create the embeddings and save them
+        pages = self.loader.load()
         text_splitter = CharacterTextSplitter(
             separator="\n",
             chunk_size=1000,
@@ -45,23 +49,29 @@ class Question(APIView):
         )
         docs = text_splitter.split_documents(pages)
 
-        # Create or update the vector store
-        self.vectordb.add_documents(docs)
+        vectordb = Chroma.from_documents(
+            documents=docs,
+            embedding=self.embedding,
+            persist_directory=persist_dir
+        )
+        return vectordb
 
     def post(self, request):
-        # Extract the question from the request data
         question = request.data.get('question', '')
 
         if not question:
             return Response({"error": "No question provided"}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            # Get the answer from the QA chain
-            answer = self.qa_chain({"query": question})
+            answer = self.qa_chain.invoke({"query": question})
+            sources = [
+                {"page_content": doc.page_content, "source": doc.metadata.get("source")}
+                for doc in answer["source_documents"]
+            ]
 
             return Response({
                 "answer": answer['result'],
-                "source_documents": answer["source_documents"]
+                "source_documents": sources
             }, status=status.HTTP_200_OK)
         except Exception as e:
             logging.error(f"Error processing question: {e}")

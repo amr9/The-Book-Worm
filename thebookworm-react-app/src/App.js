@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 import './App.css';
 
@@ -10,13 +10,17 @@ function App() {
         if (!input) return;
 
         // Add user message to chat
-        const userMessage = { text: input, sender: 'user' };
+        const userMessage = {text: input, sender: 'user'};
         setMessages((prev) => [...prev, userMessage]);
 
         // Send input to backend
         try {
-            const response = await axios.post('http://localhost:8000/api/question', { question: input });
-            const botMessage = { text: response.data.answer, sender: 'bot' };
+            const response = await axios.post('http://localhost:8000/api/question', {question: input});
+            const botMessage = {
+                text: response.data.answer,
+                sender: 'bot',
+                sources: response.data.source_documents || []
+            };
             setMessages((prev) => [...prev, botMessage]);
         } catch (error) {
             // Handle different types of errors
@@ -32,9 +36,9 @@ function App() {
                 errorMessage = error.message;
             }
 
-            const botMessage = { text: errorMessage, sender: 'bot' };
+            const botMessage = {text: errorMessage, sender: 'bot'};
             setMessages((prev) => [...prev, botMessage]);
-    }
+        }
 
         setInput('');
     };
@@ -46,6 +50,16 @@ function App() {
                     {messages.map((msg, index) => (
                         <div key={index} className={msg.sender}>
                             {msg.text}
+                            {msg.sources && msg.sources.length > 0 && (
+                                <div className="sources">
+                                    <h4>Source Documents:</h4>
+                                    <ul>
+                                        {msg.sources.map((source, idx) => (
+                                            <li key={idx}>{source.page_content}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
                         </div>
                     ))}
                 </div>
