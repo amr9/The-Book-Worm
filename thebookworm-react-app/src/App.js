@@ -13,6 +13,8 @@ function App() {
         const userMessage = {text: input, sender: 'user'};
         setMessages((prev) => [...prev, userMessage]);
 
+        // Clear input immediately after adding to messages
+        setInput('');
         // Send input to backend
         try {
             const response = await axios.post('http://localhost:8000/api/question', {question: input});
