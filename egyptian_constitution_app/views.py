@@ -1,20 +1,28 @@
 import os
+from django.utils import timezone
+import logging
+
 from langchain.chains.retrieval_qa.base import RetrievalQA
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.views import APIView
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import CharacterTextSplitter
 from decouple import config
-import logging
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_chroma import Chroma
 
-# Configure logging
+from rest_framework import status
+from rest_framework.authtoken.models import Token
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.response import Response
+from django.contrib.auth import authenticate
+from rest_framework.views import APIView
+
+from egyptian_constitution_app.models import User
+from egyptian_constitution_app.serializers import LoginSerializer, UserSerializer
+
 logging.basicConfig(level=logging.INFO)
 
-
 class Question(APIView):
+    permission_classes = (IsAuthenticated,)
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.loader = PyPDFLoader("دستور-جمهورية-مصر-العربية- edited 2019.pdf")
@@ -78,3 +86,49 @@ class Question(APIView):
             return Response({
                 "error": "Could you ask your question again, please?"
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class Login(APIView):
+    permission_classes = (AllowAny,)
+
+    def post(self, request):
+        serializer = LoginSerializer(data=request.data)
+        if serializer.is_valid():
+            username = serializer.validated_data['username']
+            password = serializer.validated_data['password']
+
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                token, created = Token.objects.get_or_create(user=user)
+                User.objects.update(last_login=timezone.now())
+                return Response({'message': 'Successfully logged in', 'token': token.key}, status=status.HTTP_200_OK)
+            else:
+                return Response({'errors': ['Invalid credentials']},
+                                status=status.HTTP_401_UNAUTHORIZED)
+
+        return Response({'errors': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class Logout(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        try:
+            request.user.auth_token.delete()
+            return Response({'message': 'Successfully logged out.'}, status=status.HTTP_200_OK)
+        except (AttributeError, Token.DoesNotExist):
+            return Response({'error': 'Invalid token or user not logged in.'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class Register(APIView):
+    permission_classes = (AllowAny,)
+
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response({
+                'message': 'successfully registered',
+                'user': serializer.data,
+            }, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
