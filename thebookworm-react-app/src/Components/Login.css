@@ -1,0 +1,36 @@
+.login-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    flex-wrap: wrap;
+    background: #edebeb;
+    width: 50%;
+    margin: auto;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+}
+form div{
+    margin: 6px;
+}
+
+form input{
+    margin-left: 8px;
+}
+
+.login-button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.error-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    color: red;
+}

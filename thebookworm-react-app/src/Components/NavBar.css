@@ -1,0 +1,53 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #fff;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.logo img{
+    width: 40px;
+}
+
+
+.nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+}
+
+.nav ul li button {
+    padding: 0.5rem 1rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 30px;
+}
+
+.nav .sign-in {
+    background-color: #fff;
+    border: 1px solid #000;
+}
+
+.nav .register {
+    background-color: #000;
+    color: #fff;
+}
+
+.logout {
+    background-color: #000;
+    color: #fff;
+}
