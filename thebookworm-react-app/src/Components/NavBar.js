@@ -68,7 +68,7 @@ const Navbar = () => {
             <nav className="nav">
                 <ul>
                     {isLoggedIn && (
-                        <li><Link smooth to="/" className="nav-link">ChatBot</Link></li>
+                        <li><Link smooth to="/ChatBot" className="nav-link">ChatBot</Link></li>
                     )}
                     {/*<li><Link smooth to="/#about-us" className="nav-link">About Us</Link></li>*/}
                     <li><Link smooth to="/feature" className="nav-link">Feature</Link></li>

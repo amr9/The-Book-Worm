@@ -4,6 +4,7 @@
     font-family: Arial, sans-serif;
     flex: 1;
     justify-content: space-around;
+    background: white;
 }
 
 .hero {

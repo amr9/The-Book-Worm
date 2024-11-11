@@ -3,9 +3,10 @@
     flex-direction: column;
     flex: 1;
     flex-wrap: wrap;
-    background: #edebeb;
+    background: #ffffff;
     width: 50%;
     margin: auto;
+    padding: 10% 0;
 }
 
 .login-form {
