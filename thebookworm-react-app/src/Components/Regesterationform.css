@@ -6,6 +6,7 @@
     margin: auto;
     padding: 10% 0;
     flex-wrap: wrap;
+    border-radius: 50px;
     background: #ffffff;
 }
 

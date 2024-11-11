@@ -5,6 +5,7 @@
     flex: 1;
     justify-content: space-around;
     background: white;
+    min-height: 100vmax;
 }
 
 .hero {
