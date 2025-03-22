@@ -1,6 +1,5 @@
 import os
-from django.utils import timezone
-import logging
+# import logging
 
 from langchain.chains.retrieval_qa.base import RetrievalQA
 from langchain_community.document_loaders import PyPDFLoader
@@ -16,10 +15,9 @@ from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from rest_framework.views import APIView
 
-from egyptian_constitution_app.models import User
 from egyptian_constitution_app.serializers import LoginSerializer, UserSerializer
 
-logging.basicConfig(level=logging.INFO)
+# logging.basicConfig(level=logging.INFO)
 
 class Question(APIView):
     permission_classes = (IsAuthenticated,)
@@ -82,7 +80,7 @@ class Question(APIView):
                 "source_documents": sources
             }, status=status.HTTP_200_OK)
         except Exception as e:
-            logging.error(f"Error processing question: {e}")
+            # logging.error(f"Error processing question: {e}")
             return Response({
                 "error": "Could you ask your question again, please?"
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -99,7 +97,7 @@ class Login(APIView):
             user = authenticate(username=username, password=password)
             if user is not None:
                 token, created = Token.objects.get_or_create(user=user)
-                User.objects.update(last_login=timezone.now())
+                # User.objects.update(last_login=timezone.now())
                 return Response({'message': 'Successfully logged in', 'token': token.key}, status=status.HTTP_200_OK)
             else:
                 return Response({'errors': ['Invalid credentials']},
